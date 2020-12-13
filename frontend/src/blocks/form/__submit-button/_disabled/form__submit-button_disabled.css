@@ -1,0 +1,13 @@
+.form__submit-button_disabled {
+  margin-top: 32px;
+  cursor: default;
+  background-color: #fff;
+  border: 1px solid #C4C4C4;;
+  color: #C4C4C4;
+}
+
+@media screen and (max-width: 550px) {
+  .form__submit-button_disabled {
+    margin-top: 20px;
+  }
+}
