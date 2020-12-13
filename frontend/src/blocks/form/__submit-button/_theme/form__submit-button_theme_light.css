@@ -1,0 +1,11 @@
+.form__submit-button_theme_light {
+  margin-top: 32px;
+  background-color: #000;
+  color: #fff;
+}
+
+@media screen and (max-width: 550px) {
+  .form__submit-button_theme_light{
+    margin-top: 20px;
+  }
+}

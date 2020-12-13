@@ -1,0 +1,10 @@
+.form_theme_dark {
+  padding: 20px 36px 0;
+  background-color: transparent;
+}
+
+@media screen and (max-width: 550px) {
+  .form_theme_dark {
+    padding: 0 30px;
+  }
+}

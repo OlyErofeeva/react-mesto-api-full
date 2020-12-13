@@ -1,0 +1,9 @@
+.header__container {
+  display: grid;
+  grid-template-rows: min-content min-content;
+  grid-template-columns: 1fr 1fr;
+  grid-template-areas: 
+  "additional-panel additional-panel"
+  "logo main-panel";
+  align-items: center;
+}

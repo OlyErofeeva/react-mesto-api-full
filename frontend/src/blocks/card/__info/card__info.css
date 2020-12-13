@@ -1,0 +1,9 @@
+.card__info {
+  box-sizing: border-box;
+  min-height: 77px; /* на случай, если пользователь оставит название картинки пустым */
+  background-color: #fff;
+  padding: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}

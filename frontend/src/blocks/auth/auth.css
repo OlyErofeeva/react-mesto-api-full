@@ -1,0 +1,14 @@
+@import url(./__link/auth__link.css);
+
+.auth {
+  flex: 1 0 auto;
+  max-width: calc(100% - 2*40px);
+  width: 430px;
+  margin: 0 auto;
+}
+
+@media screen and (max-width: 550px) {
+  .auth {
+    max-width: 100%;
+  }
+}

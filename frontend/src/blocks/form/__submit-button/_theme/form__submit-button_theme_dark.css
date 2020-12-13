@@ -1,0 +1,11 @@
+.form__submit-button_theme_dark {
+  margin-top: 216px;
+  background-color: #fff;
+  color: #000;
+}
+
+@media screen and (max-width: 550px) {
+  .form__submit-button_theme_dark {
+    margin-top: 170px;
+  }
+}

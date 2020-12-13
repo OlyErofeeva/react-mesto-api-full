@@ -1,0 +1,10 @@
+.modal__content {
+  position: relative;
+  box-sizing: border-box;
+  max-width: calc(100% - 2*40px);
+  width: 430px;
+}
+
+.modal_for_photo .modal__content {
+  width: auto;
+}
