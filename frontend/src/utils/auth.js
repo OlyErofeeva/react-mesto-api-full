@@ -62,7 +62,7 @@ class Auth {
 }
 
 export const auth = new Auth({
-  baseUrl: "http://localhost:3001",
+  baseUrl: "https://api.oly.students.nomoredomains.icu",
   headers: {
     "Content-Type": "application/json",
   },
