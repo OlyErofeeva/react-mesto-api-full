@@ -18,32 +18,14 @@ class Auth {
   }
 
   /**
-   * getUserLoginInfo response example:
-      {
-        "data": {
-          "_id": "5f5204c577488bcaa8b7bdf2",,
-          "email": "email@yandex.ru"
-      }
-    }
-    * @param {string} token
-   */
-  getUserLoginInfo(token) {
-    return fetch(`${this._baseUrl}/users/me`, {
-      method: "GET",
-      headers: {
-        ...this._headers,
-        Authorization: `Bearer ${token}`,
-      },
-    }).then(this._handleResponse);
-  }
-
-  /**
    * signUp response example:
     {
-      "data": {
-        "_id": "5f5204c577488bcaa8b7bdf2",,
-        "email": "email@yandex.ru"
-      }
+      "name": "Жак-Ив Кусто",
+      "about": "Иссследователь",
+      "avatar": "https://pictures.s3.yandex.net/resources/jacques-cousteau_1604399756.png",
+      "_id": "5fd8e8762e9a7c07cce95710",
+      "email": "ololo@yandex.ru",
+      "__v": 0
     }
    * @param {string} password
    * @param {string} email
@@ -64,8 +46,8 @@ class Auth {
     {
       "token" : "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZjUxNDhlNWJiODhmZGNhOTIxYjZhYzciLCJpYXQiOjE1OTkyMTExNzN9.Q3DVLh7t0f0BjyG9gh3UlUREYQxl2chdGTGy701lF6I"
     }
-   * @param {*} password 
-   * @param {*} email 
+   * @param {string} password 
+   * @param {string} email 
    */
   signIn(email, password) {
     return fetch(`${this._baseUrl}/signin`, {
@@ -80,7 +62,7 @@ class Auth {
 }
 
 export const auth = new Auth({
-  baseUrl: "https://auth.nomoreparties.co",
+  baseUrl: "http://localhost:3001",
   headers: {
     "Content-Type": "application/json",
   },

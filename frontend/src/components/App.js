@@ -20,14 +20,16 @@ import { CurrentUserContext } from "../contexts/CurrentUserContext";
 function App() {
   const history = useHistory();
   const [loggedIn, setLoggedIn] = useState(false);
-  const [userAuthData, setUserAuthData] = useState({
-    email: "",
-    _id: "", // пока не используется, но по возможности заполняется
-  });
+  // const [userAuthData, setUserAuthData] = useState({
+  //   email: "",
+  //   _id: "", // пока не используется, но по возможности заполняется
+  // });
   const [currentUser, setCurrentUser] = useState({
     name: "",
     about: "",
     avatar: "#",
+    email: "",
+    _id: "",
   });
   const [cards, setCards] = useState([]);
   const [isConfirmDeletePopupOpen, setIsConfirmDeletePopupOpen] = useState(false);
@@ -73,9 +75,9 @@ function App() {
 
   const handleCardLike = (cardLikes, cardId) => {
     const isLiked = cardLikes.some((like) => like._id === currentUser._id);
-
+    const token = localStorage.getItem("token");
     api
-      .changeLikeCardStatus(cardId, isLiked)
+      .changeLikeCardStatus(token, cardId, isLiked)
       .then((responseCard) => {
         const newCards = cards.map((item) =>
           item._id === cardId ? responseCard : item
@@ -91,8 +93,9 @@ function App() {
   };
 
   const handleDeleteConfirmation = (cardId) => {
+    const token = localStorage.getItem("token");
     api
-      .deleteCard(cardId)
+      .deleteCard(token, cardId)
       .then(() => {
         const newCards = cards.filter((item) => item._id !== cardId);
         setCards(newCards);
@@ -106,13 +109,15 @@ function App() {
       name: response.name,
       about: response.about,
       avatar: response.avatar,
+      email: response.email,
       _id: response._id,
     });
   };
 
   const handleUpdateUser = (newData) => {
+    const token = localStorage.getItem("token");
     return api
-      .editProfile(newData)
+      .editProfile(token, newData)
       .then((response) => {
         updateUserOnResponse(response);
         closeAllPopups();
@@ -121,8 +126,9 @@ function App() {
   };
 
   const handleUpdateAvatar = (newAvatarLink) => {
+    const token = localStorage.getItem("token");
     return api
-      .changeAvatar(newAvatarLink)
+      .changeAvatar(token, newAvatarLink)
       .then((response) => {
         updateUserOnResponse(response);
         closeAllPopups();
@@ -131,8 +137,9 @@ function App() {
   };
 
   const handleAddPlace = (cardData) => {
+    const token = localStorage.getItem("token");
     return api
-      .saveCard(cardData)
+      .saveCard(token, cardData)
       .then((response) => {
         const newCard = {
           _id: response._id,
@@ -151,7 +158,7 @@ function App() {
     auth
       .signUp(email, password)
       .then((response) => {
-        setUserAuthData(response.data);
+        setCurrentUser(response);
         setIsTooltipSuccessful(true);
         history.push("/sign-in");
       })
@@ -165,8 +172,8 @@ function App() {
       .then((response) => {
         if (response.token) {
           localStorage.setItem("token", response.token);
-          setUserAuthData({
-            ...userAuthData,
+          setCurrentUser({
+            ...currentUser,
             email: email,
           });
           setLoggedIn(true);
@@ -178,7 +185,10 @@ function App() {
   const handleLogout = () => {
     localStorage.removeItem("token");
     setLoggedIn(false);
-    setUserAuthData({
+    setCurrentUser({
+      name: "",
+      about: "",
+      avatar: "#",
       email: "",
       _id: "",
     });
@@ -188,10 +198,10 @@ function App() {
   useEffect(() => {
     const token = localStorage.getItem("token");
     if (token) {
-      auth
-        .getUserLoginInfo(token)
+      api
+        .getUserInfo(token)
         .then((response) => {
-          setUserAuthData(response.data);
+          setCurrentUser(response);
           setLoggedIn(true);
         })
         .catch(() => {
@@ -209,7 +219,8 @@ function App() {
 
   useEffect(() => {
     if (loggedIn) {
-      Promise.all([api.getUserInfo(), api.getInitialCards()])
+      const token = localStorage.getItem("token");
+      Promise.all([api.getUserInfo(token), api.getInitialCards(token)])
         .then((results) => {
           const userInfo = results[0];
           const initialCards = results[1];
@@ -233,7 +244,7 @@ function App() {
     <>
       <CurrentUserContext.Provider value={currentUser}>
         <div className="page__container">
-          <Header userAuthData={userAuthData} handleLogout={handleLogout} />
+          <Header userData={currentUser} handleLogout={handleLogout} />
           <Switch>
             <Route path="/sign-in">
               <Login handleLogin={handleLogin} />
