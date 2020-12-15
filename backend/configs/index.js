@@ -1,7 +1,8 @@
 const SALT_ROUND = 10;
-const JWT_SECRET = 'dev-jwt-secret';
+const { NODE_ENV, JWT_SECRET } = process.env;
 
 module.exports = {
   SALT_ROUND,
+  NODE_ENV,
   JWT_SECRET,
 };

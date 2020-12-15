@@ -1,9 +1,9 @@
 const jwt = require('jsonwebtoken');
-const { JWT_SECRET } = require('../configs/index');
+const { NODE_ENV, JWT_SECRET } = require('../configs/index');
 
 const jwtSign = (payload, expiresIn) => jwt.sign(
   payload,
-  JWT_SECRET,
+  NODE_ENV === 'production' ? JWT_SECRET : 'dev-jwt-secret',
   { expiresIn },
 );
 
