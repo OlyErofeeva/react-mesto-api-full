@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 import { Switch, Route, Link } from "react-router-dom";
 import logo from "../images/logo_color_white.svg";
 
-function Header({ userAuthData, handleLogout }) {
+function Header({ userData, handleLogout }) {
   const [isMenuButtonPressed, setIsMenuButtonPressed] = useState(false);
 
   const handleMenuClick = () => {
@@ -33,7 +33,7 @@ function Header({ userAuthData, handleLogout }) {
                 "header__logout-container_visible": isMenuButtonPressed,
               })}
             >
-              <p className="header__user-info">{userAuthData.email}</p>
+              <p className="header__user-info">{userData.email}</p>
               <button
                 type="button"
                 className="logout-button"
@@ -58,7 +58,7 @@ function Header({ userAuthData, handleLogout }) {
 }
 
 Header.propTypes = {
-  userAuthData: PropTypes.object.isRequired,
+  userData: PropTypes.object.isRequired,
   handleLogout: PropTypes.func.isRequired,
 };
 

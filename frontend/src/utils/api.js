@@ -24,10 +24,13 @@ class Api {
         "cohort": "cohort0"
       }
    */
-  getUserInfo() {
+  getUserInfo(token) {
     return fetch(`${this._baseUrl}/users/me`, {
       method: "GET",
-      headers: this._headers,
+      headers: {
+        ...this._headers,
+        Authorization: `Bearer ${token}`,
+      },
     }).then(this._handleResponse);
   }
 
@@ -64,10 +67,13 @@ class Api {
         }
       ]
    */
-  getInitialCards() {
+  getInitialCards(token) {
     return fetch(`${this._baseUrl}/cards`, {
       method: "GET",
-      headers: this._headers,
+      headers: {
+        ...this._headers,
+        Authorization: `Bearer ${token}`,
+      },
     }).then(this._handleResponse);
   }
 
@@ -82,10 +88,13 @@ class Api {
       }
    * @param {object} newData - Object created from "editProfile" form inputs.
    */
-  editProfile(newData) {
+  editProfile(token, newData) {
     return fetch(`${this._baseUrl}/users/me`, {
       method: "PATCH",
-      headers: this._headers,
+      headers: {
+        ...this._headers,
+        Authorization: `Bearer ${token}`,
+      },
       body: JSON.stringify({
         name: newData.name,
         about: newData.about,
@@ -104,10 +113,13 @@ class Api {
       }
    * @param {string} avatarLink - New avatar link.
    */
-  changeAvatar(avatarLink) {
+  changeAvatar(token, avatarLink) {
     return fetch(`${this._baseUrl}/users/me/avatar`, {
       method: "PATCH",
-      headers: this._headers,
+      headers: {
+        ...this._headers,
+        Authorization: `Bearer ${token}`,
+      },
       body: JSON.stringify({
         avatar: avatarLink,
       }),
@@ -132,10 +144,13 @@ class Api {
       }
    * @param {object} cardData - Object with properties of a new card.
    */
-  saveCard(cardData) {
+  saveCard(token, cardData) {
     return fetch(`${this._baseUrl}/cards`, {
       method: "POST",
-      headers: this._headers,
+      headers: {
+        ...this._headers,
+        Authorization: `Bearer ${token}`,
+      },
       body: JSON.stringify({
         name: cardData.name,
         link: cardData.link,
@@ -150,10 +165,13 @@ class Api {
       }
    * @param {string} cardId - Id of the card that user wants to delete.
    */
-  deleteCard(cardId) {
+  deleteCard(token, cardId) {
     return fetch(`${this._baseUrl}/cards/${cardId}`, {
       method: "DELETE",
-      headers: this._headers,
+      headers: {
+        ...this._headers,
+        Authorization: `Bearer ${token}`,
+      },
     }).then(this._handleResponse);
   }
 
@@ -183,10 +201,13 @@ class Api {
       }
    * @param {string} cardId - Id of the card that user likes.
    */
-  likeCard(cardId) {
-    return fetch(`${this._baseUrl}/cards/likes/${cardId}`, {
+  likeCard(token, cardId) {
+    return fetch(`${this._baseUrl}/cards/${cardId}/likes`, {
       method: "PUT",
-      headers: this._headers,
+      headers: {
+        ...this._headers,
+        Authorization: `Bearer ${token}`,
+      },
     }).then(this._handleResponse);
   }
 
@@ -194,10 +215,13 @@ class Api {
    * dislikeCard & likeCard response structures are the same
    * @param {string} cardId - Id of the card that user dislikes.
    */
-  dislikeCard(cardId) {
-    return fetch(`${this._baseUrl}/cards/likes/${cardId}`, {
+  dislikeCard(token, cardId) {
+    return fetch(`${this._baseUrl}/cards/${cardId}/likes`, {
       method: "DELETE",
-      headers: this._headers,
+      headers: {
+        ...this._headers,
+        Authorization: `Bearer ${token}`,
+      },
     }).then(this._handleResponse);
   }
 
@@ -205,15 +229,14 @@ class Api {
    * @param {string} cardId - Id of the card that user likes/dislikes.
    * @param {boolean} isLiked - true if the card is liked.
    */
-  changeLikeCardStatus(cardId, isLiked) {
-    return isLiked ? this.dislikeCard(cardId) : this.likeCard(cardId);
+  changeLikeCardStatus(token, cardId, isLiked) {
+    return isLiked ? this.dislikeCard(token, cardId) : this.likeCard(token, cardId);
   }
 }
 
 export const api = new Api({
-  baseUrl: "https://mesto.nomoreparties.co/v1/cohort-15",
+  baseUrl: "http://localhost:3001",
   headers: {
-    authorization: "7e5ed350-7573-4b9b-967c-f139542c3d10",
     "Content-Type": "application/json",
   },
 });
