@@ -5,6 +5,7 @@ const jwtSign = require('../utils/jwt-sign');
 const validationErrorHandler = require('../utils/validation-error-handler');
 const { SALT_ROUND } = require('../configs/index');
 const NotFoundError = require('../errors/not-found-error');
+const ConflictError = require('../errors/conflict-error');
 
 module.exports.login = (req, res, next) => {
   const { email, password } = req.body;
@@ -57,7 +58,13 @@ module.exports.createUser = (req, res, next) => {
     avatar,
   } = req.body;
 
-  bcrypt.hash(password, SALT_ROUND)
+  User.findOne({ email })
+    .then((user) => {
+      if (user) {
+        throw new ConflictError('Пользователь с таким email уже есть');
+      }
+      return bcrypt.hash(password, SALT_ROUND);
+    })
     .then((hash) => User.create({
       email,
       password: hash,
