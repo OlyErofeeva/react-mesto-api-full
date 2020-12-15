@@ -65,7 +65,11 @@ module.exports.createUser = (req, res, next) => {
       about,
       avatar,
     }))
-    .then((user) => res.send(user))
+    .then((user) => {
+      const userWithoutPassword = { ...user._doc }; // eslint-disable-line no-underscore-dangle
+      delete userWithoutPassword.password;
+      res.send(userWithoutPassword);
+    })
     .catch((err) => validationErrorHandler(err, next));
 };
 

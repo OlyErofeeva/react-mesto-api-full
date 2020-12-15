@@ -104,22 +104,12 @@ function App() {
       .catch((err) => alert(err));
   };
 
-  const updateUserOnResponse = (response) => {
-    setCurrentUser({
-      name: response.name,
-      about: response.about,
-      avatar: response.avatar,
-      email: response.email,
-      _id: response._id,
-    });
-  };
-
   const handleUpdateUser = (newData) => {
     const token = localStorage.getItem("token");
     return api
       .editProfile(token, newData)
       .then((response) => {
-        updateUserOnResponse(response);
+        setCurrentUser(response);
         closeAllPopups();
       })
       .catch((err) => alert(err));
@@ -130,7 +120,7 @@ function App() {
     return api
       .changeAvatar(token, newAvatarLink)
       .then((response) => {
-        updateUserOnResponse(response);
+        setCurrentUser(response);
         closeAllPopups();
       })
       .catch((err) => alert(err));
@@ -232,7 +222,7 @@ function App() {
             owner: item.owner,
           }));
 
-          updateUserOnResponse(userInfo);
+          setCurrentUser(userInfo);
           setCards(items);
           setIsLoading(false);
         })
