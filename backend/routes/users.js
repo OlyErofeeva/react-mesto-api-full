@@ -29,15 +29,17 @@ router.get('/users/:id', celebrate({
 // PATCH: обновление имени и bio текущего пользователя
 router.patch('/users/me', celebrate({
   body: Joi.object().keys({
-    name: Joi.string().min(2).max(30),
-    about: Joi.string().min(2).max(30),
+    name: Joi.string().required().min(2).max(30)
+      .trim(),
+    about: Joi.string().required().min(2).max(30)
+      .trim(),
   }),
 }), updateUserInfo);
 
 // PATCH: обновление аватара текущего пользователя
 router.patch('/users/me/avatar', celebrate({
   body: Joi.object().keys({
-    avatar: Joi.string().pattern(new RegExp(urlRegex)),
+    avatar: Joi.string().required().pattern(new RegExp(urlRegex)),
   }),
 }), updateUserAvatar);
 
