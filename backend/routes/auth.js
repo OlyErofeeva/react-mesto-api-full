@@ -13,14 +13,14 @@ router.get('/crash-test', () => {
 router.post('/signin', celebrate({
   body: Joi.object().keys({
     email: Joi.string().required().email().lowercase(),
-    password: Joi.string().required().min(8),
+    password: Joi.string().required().min(8).trim(),
   }),
 }), login);
 
 router.post('/signup', celebrate({
   body: Joi.object().keys({
     email: Joi.string().required().email().lowercase(),
-    password: Joi.string().required().min(8),
+    password: Joi.string().required().min(8).trim(),
   }),
 }), createUser);
 
