@@ -199,12 +199,14 @@ function App() {
           alert("Время сессии истекло. Пожалуйста, авторизуйтесь снова.");
         });
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
     if (loggedIn) {
       history.push("/");
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [loggedIn]);
 
   useEffect(() => {

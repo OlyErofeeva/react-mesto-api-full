@@ -44,6 +44,7 @@ function EditProfilePopup({ isOpen, onClose, onUpdateUser }) {
 
   React.useEffect(() => {
     resetInputs(currentUser);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentUser]);
 
   return (
