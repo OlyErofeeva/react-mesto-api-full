@@ -235,7 +235,7 @@ class Api {
 }
 
 export const api = new Api({
-  baseUrl: "https://api.oly.students.nomoredomains.icu",
+  baseUrl: "/api",
   headers: {
     "Content-Type": "application/json",
   },
